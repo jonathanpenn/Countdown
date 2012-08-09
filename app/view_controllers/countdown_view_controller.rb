@@ -236,7 +236,8 @@ class CountdownViewController < UITableViewController
   end
 
   def addTableViewFooter
-    tableView.tableFooterView = UIView.alloc.initWithFrame([[0,0],[320,tableView.bounds.size.height/2]])
+    tableView.tableFooterView = UIView.alloc.initWithFrame(
+      [[0,0],[320,tableView.bounds.size.height/2]])
     tableView.tableFooterView.backgroundColor = UIColor.blackColor
   end
 
