@@ -1,6 +1,8 @@
 class SwipeToGoBackInstructionsLabel < UILabel
   include Patchwork
 
+  attr_accessor :animating
+
   attr_reader :animatedArrowView
 
   def initWithFrame frame
@@ -13,9 +15,9 @@ class SwipeToGoBackInstructionsLabel < UILabel
   end
 
   def animate
-    return if @animating
+    return if animating
 
-    @animating = true
+    self.animating = true
 
     self.alpha = 0
     animatedArrowView.alpha = 0
@@ -31,7 +33,7 @@ class SwipeToGoBackInstructionsLabel < UILabel
           delay: 2,
           options: 0,
           animations: -> { self.alpha = 0 },
-          completion: -> finished { @animating = false }
+          completion: -> finished { self.animating = false }
         )
       }
     )
