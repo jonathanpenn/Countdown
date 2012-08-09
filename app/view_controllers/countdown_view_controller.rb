@@ -196,6 +196,23 @@ class CountdownViewController < UITableViewController
     tableView.cellForRowAtIndexPath(path)
   end
 
+  def editThisCountdown
+    controller = CountdownEditorViewController.withNavigationForCountdown(
+      countdown,
+      onDone: -> editor {
+        countdown.collection.save
+        tableView.contentOffset = [0,0]
+        dismissModalViewControllerAnimated(true)
+        @countdownCalculator = nil
+        update
+      },
+      onCancel: -> editor {
+        dismissModalViewControllerAnimated(true)
+      }
+    )
+    presentModalViewController(controller, animated: true)
+  end
+
 
   #
   # Setup
@@ -213,21 +230,7 @@ class CountdownViewController < UITableViewController
       navigationController.popViewControllerAnimated true
     end
 
-    t.onDoubleTap do
-      controller = CountdownEditorViewController.withNavigationForCountdown(
-        countdown,
-        onDone: -> editor {
-          countdown.collection.save
-          tableView.contentOffset = [0,0]
-          dismissModalViewControllerAnimated(true)
-          @countdownCalculator = nil
-          update
-        },
-        onCancel: -> editor {
-          dismissModalViewControllerAnimated(true)
-        })
-      presentModalViewController(controller, animated: true)
-    end
+    t.onDoubleTap { editThisCountdown }
 
     @instructionsView = SwipeToGoBackInstructionsLabel.alloc.init
     instructionsView.frame = [[0,0],[view.size.width, 120]]
