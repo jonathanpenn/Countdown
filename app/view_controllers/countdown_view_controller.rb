@@ -6,8 +6,7 @@ class CountdownViewController < UITableViewController
   attr_reader :instructionsView
 
   def self.controller
-    controller = self.alloc.init
-    controller
+    self.alloc.init
   end
 
   def update
