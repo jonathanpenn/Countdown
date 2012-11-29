@@ -6,7 +6,7 @@ class CountdownViewController < UITableViewController
   attr_reader :instructionsView
 
   def self.controller
-    self.alloc.init
+    alloc.init
   end
 
   def update
@@ -46,7 +46,6 @@ class CountdownViewController < UITableViewController
 
   def viewDidLoad
     super
-
     setupTableView
   end
 

@@ -21,7 +21,7 @@ class CountdownCollectionTableViewController < UITableViewController
   #
 
   def viewDidLoad
-    setupController
+    self.title = "Countdowns"
     setupNavButtons
     setupTableView
 
@@ -47,6 +47,19 @@ class CountdownCollectionTableViewController < UITableViewController
   # Table View Callbacks
   #
 
+  def tableView tableView, numberOfRowsInSection: section
+    collection.length
+  end
+
+  def tableView tableView, cellForRowAtIndexPath: path
+    countdown = collection[path.row]
+
+    cell = CountdownCollectionTableViewCell.cell
+    cell.countdown = countdown
+
+    cell
+  end
+
   def tableView tableView, didSelectRowAtIndexPath: path
     countdown = collection[path.row]
     if tableView.isEditing
@@ -63,10 +76,6 @@ class CountdownCollectionTableViewController < UITableViewController
     tableView.deselectRowAtIndexPath(path, animated: true)
   end
 
-  def tableView tableView, numberOfRowsInSection: section
-    collection.length
-  end
-
   def tableView tableView, commitEditingStyle: style, forRowAtIndexPath: path
     if style == UITableViewCellEditingStyleDelete
       collection.deleteAt(path.row)
@@ -76,25 +85,12 @@ class CountdownCollectionTableViewController < UITableViewController
     end
   end
 
-  def tableView tableView, cellForRowAtIndexPath: path
-    countdown = collection[path.row]
-
-    cell = CountdownCollectionTableViewCell.cell
-    cell.countdown = countdown
-
-    cell
-  end
-
 
   private
 
   #
   # Setup
   #
-
-  def setupController
-    self.title = "Countdowns"
-  end
 
   def setupNavButtons
     navigationItem.leftBarButtonItem = editButtonItem
