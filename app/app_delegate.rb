@@ -1,28 +1,25 @@
 class AppDelegate
-  attr_accessor :window
-  attr_accessor :navViewController
-  attr_accessor :collection
 
   def application(application, didFinishLaunchingWithOptions:launchOptions)
     setupVisuals
 
-    self.window = UIWindow.alloc.initWithFrame(UIScreen.mainScreen.bounds)
+    @window = UIWindow.alloc.initWithFrame(UIScreen.mainScreen.bounds)
 
-    self.collection = Config.countdownCollection
+    collection = Config.countdownCollection
 
     controller = CountdownCollectionTableViewController.alloc.init
     controller.collection = collection
 
-    self.navViewController = UINavigationController.alloc.initWithRootViewController(controller)
+    navViewController = UINavigationController.alloc.initWithRootViewController(controller)
 
     selectedIndex = Config.selectedCountdownIndex
     if selectedIndex
       controller.openCountdownAtIndex(selectedIndex)
     end
 
-    window.rootViewController = navViewController
+    @window.rootViewController = navViewController
 
-    window.makeKeyAndVisible
+    @window.makeKeyAndVisible
 
     true
   end
