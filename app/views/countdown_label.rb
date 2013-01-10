@@ -2,7 +2,7 @@ class CountdownLabel < UILabel
   attr_accessor :colorScheme
 
   def initWithFrame frame
-    super
+    return nil unless super
     self.backgroundColor = UIColor.blackColor
     self.textAlignment = UITextAlignmentCenter
     self.color = UIColor.whiteColor

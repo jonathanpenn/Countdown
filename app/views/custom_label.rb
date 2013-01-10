@@ -1,6 +1,6 @@
 class CustomLabel < UILabel
   def initWithFrame frame
-    super
+    return nil unless super
     self.backgroundColor = UIColor.clearColor
     self.textAlignment = UITextAlignmentCenter
     self.shadowColor = UIColor.blackColor
@@ -10,7 +10,6 @@ class CustomLabel < UILabel
     self.adjustsFontSizeToFitWidth = true
     self.font = UIFont.systemFontOfSize(18)
     self.opaque = false
-
     self
   end
 end

@@ -8,7 +8,6 @@ class SwipeToGoBackInstructionsLabel < UILabel
       setupSelf
       setupAnimationView
     end
-
     self
   end
 

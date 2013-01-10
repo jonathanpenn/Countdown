@@ -1,6 +1,6 @@
 class TitleLabel < UILabel
   def initWithFrame frame
-    super
+    return nil unless super
     self.backgroundColor = UIColor.clearColor
     self.opaque = false
     self.textAlignment = UITextAlignmentCenter
@@ -10,7 +10,6 @@ class TitleLabel < UILabel
     self.numberOfLines = 1
     self.adjustsFontSizeToFitWidth = true
     self.font = UIFont.systemFontOfSize(20)
-
     self
   end
 end
