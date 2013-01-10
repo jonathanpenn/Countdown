@@ -21,6 +21,7 @@ class CountdownCollectionTableViewController < UITableViewController
   #
 
   def viewDidLoad
+    super
     self.title = "Countdowns"
     setupNavButtons
     setupTableView
@@ -29,6 +30,7 @@ class CountdownCollectionTableViewController < UITableViewController
   end
 
   def viewWillAppear animated
+    super
     navigationController.setNavigationBarHidden false, animated: animated
     tableView.reloadData
   end
