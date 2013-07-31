@@ -7,6 +7,7 @@ class CountdownWeekTableViewCell < UITableViewCell
                                reuseIdentifier: name)
     cell.layer.shouldRasterize = true
     cell.layer.rasterizationScale = UIScreen.mainScreen.scale
+    cell.backgroundColor = UIColor.blackColor
     cell.setup
     cell
   end

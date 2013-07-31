@@ -15,6 +15,7 @@ class CountdownTableViewCell < UITableViewCell
     self.countdownLabel = CountdownLabel.alloc.initWithFrame [[0,0],[bounds.size.width,80]]
     self.dateLabel = CustomLabel.alloc.initWithFrame [[0,0],[bounds.size.width,50]]
     self.distance = 1
+    self.backgroundColor = UIColor.blackColor
 
     addSubview countdownLabel
     addSubview dateLabel
