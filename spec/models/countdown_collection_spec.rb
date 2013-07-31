@@ -41,13 +41,11 @@ describe CountdownCollection do
 
   describe "#serialize" do
     it "serializes the collection to an array" do
-      c1 = 'first'
-      def c1.serialize; self; end
-      c2 = 'second'
-      def c2.serialize; self; end
-      @collection.insert c1
-      @collection.insert c2
-      @collection.serialize.should == [
+      first = Countdown.newWithName 'first', endTime: Time.local(2012,1,2)
+      second = Countdown.newWithName 'second', endTime: Time.local(2012,2,2)
+      @collection.insert first
+      @collection.insert second
+      @collection.serialize.map{|c| c['name']}.should == [
         'first',
         'second'
       ]

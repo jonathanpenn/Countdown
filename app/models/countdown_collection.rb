@@ -9,6 +9,7 @@ class CountdownCollection
   end
 
   def insert countdown
+    countdown.collection = self
     @array << countdown
     sort!
     self
