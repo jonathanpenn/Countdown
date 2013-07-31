@@ -29,12 +29,12 @@ class AppDelegate
 
   def setupVisuals
     UINavigationBar.appearance.tap do |bar|
-      color = UIColor.colorWithRed(0.217, green:0.231, blue:0.182, alpha:1.000)
+      color = UIColor.colorWithRed(0, green:0, blue:0, alpha:3.000)
       bar.tintColor = color
     end
 
-    UIApplication.sharedApplication.setStatusBarStyle(UIStatusBarStyleBlackTranslucent,
-                                                      animated: true)
+    UIApplication.sharedApplication.setStatusBarStyle(UIStatusBarStyleBlackOpaque,
+                                                      animated: false)
   end
 
 end
