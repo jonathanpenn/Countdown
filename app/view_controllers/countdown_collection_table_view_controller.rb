@@ -31,7 +31,7 @@ class CountdownCollectionTableViewController < UITableViewController
 
   def viewWillAppear animated
     super
-    navigationController.setNavigationBarHidden false, animated: animated
+    navigationController.setNavigationBarHidden(false, animated: animated)
     tableView.reloadData
   end
 
