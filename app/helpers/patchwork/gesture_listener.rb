@@ -3,6 +3,14 @@ module Patchwork
   module GestureListener
 
     class GestureHandler
+      # Uncomment this method to demonstrate that we are not leaking
+      #def dealloc
+      #  puts "Dealloc #{self.class}"
+      #  super
+      #end
+
+      attr_accessor :gesture
+
       def initialize callback
         @callback = callback
       end
@@ -17,22 +25,10 @@ module Patchwork
       gesture = UISwipeGestureRecognizer.alloc.initWithTarget(
         handler,
         action: 'invoke:')
-      gesture.extend(AssociatedObjects)
-      gesture.associations["GestureListenerOnSwipe"] = handler
       gesture.direction = UISwipeGestureRecognizerDirectionRight
       addGestureRecognizer gesture
-      gesture
-    end
-
-    def onTap &block
-      handler = GestureHandler.new(block)
-      gesture = UITapGestureRecognizer.alloc.initWithTarget(
-        handler,
-        action: 'invoke:')
-      gesture.extend(AssociatedObjects)
-      gesture.associations["GestureListenerOnTap"] = handler
-      addGestureRecognizer gesture
-      gesture
+      handler.gesture = gesture
+      handler
     end
 
     def onDoubleTap &block
@@ -41,12 +37,12 @@ module Patchwork
         handler,
         action: 'invoke:')
       gesture.numberOfTapsRequired = 2
-      gesture.extend(AssociatedObjects)
-      gesture.associations["GestureListenerOnDoubleTap"] = handler
       addGestureRecognizer gesture
-      gesture
+      handler.gesture = gesture
+      handler
     end
 
   end
 
 end
+

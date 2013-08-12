@@ -52,7 +52,15 @@ class CountdownViewController < UITableViewController
   def viewWillAppear animated
     super
     navigationController.setNavigationBarHidden(true, animated: animated)
-    @layoutShouldReloadTable = true
+
+    # Setting up touchhandlers here and tearing them down in viewWillDisappear
+    # to avoid a retain cycle
+    @swipeHandler = tableView.onSwipe do
+      navigationController.popViewControllerAnimated(true)
+    end
+    @doubleTapHandler = tableView.onDoubleTap do
+      editThisCountdown
+    end
   end
 
   def viewDidAppear animated
@@ -68,18 +76,9 @@ class CountdownViewController < UITableViewController
 
   def viewWillDisappear animated
     super
+    @swipeHandler = nil
+    @doubleTapHandler = nil
     NSNotificationCenter.defaultCenter.removeObserver self
-  end
-
-  def viewWillLayoutSubviews
-    super
-
-    # A hack to solve the problem where the navigation bar was crimping the
-    # table cell height
-    if @layoutShouldReloadTable
-      @layoutShouldReloadTable = nil
-      tableView.reloadData
-    end
   end
 
   def shouldAutorotateToInterfaceOrientation orientation
@@ -88,6 +87,7 @@ class CountdownViewController < UITableViewController
 
   def willRotateToInterfaceOrientation(orientation, duration: duration)
     super
+    tableView.reloadData
     update
   end
 
@@ -218,17 +218,11 @@ class CountdownViewController < UITableViewController
 
   def setupTableView
     t = tableView
+    t.extend(GestureListener)
     t.allowsSelection = false
     t.backgroundColor = UIColor.blackColor
     t.separatorStyle = UITableViewCellSeparatorStyleNone
     t.indicatorStyle = UIScrollViewIndicatorStyleWhite
-
-    t.extend(GestureListener)
-    t.onSwipe do
-      navigationController.popViewControllerAnimated true
-    end
-
-    t.onDoubleTap { editThisCountdown }
 
     @instructionsView = SwipeToGoBackInstructionsLabel.alloc.init
     instructionsView.frame = [[0,0],[view.size.width, 120]]
@@ -253,7 +247,7 @@ class CountdownViewController < UITableViewController
 
   def animateInstructionsViewIfItHasBeenAWhile
     elapsedSeconds = Time.now - Config.whenLastShownSwipeInstructions
-    if elapsedSeconds > 60 # at least a minute
+    if elapsedSeconds > 15 # only after 15 seconds since last time
       Config.whenLastShownSwipeInstructions = Time.now
       instructionsView.animate
     end
