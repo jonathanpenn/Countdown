@@ -1,9 +1,10 @@
 class AppDelegate
+  attr_accessor :window
 
   def application(application, didFinishLaunchingWithOptions:launchOptions)
     setupVisuals
 
-    @window = UIWindow.alloc.initWithFrame(UIScreen.mainScreen.bounds)
+    self.window = UIWindow.alloc.initWithFrame(UIScreen.mainScreen.bounds)
 
     collection = Config.countdownCollection
 
@@ -17,9 +18,9 @@ class AppDelegate
       controller.openCountdownAtIndex(selectedIndex)
     end
 
-    @window.rootViewController = navViewController
+    window.rootViewController = navViewController
 
-    @window.makeKeyAndVisible
+    window.makeKeyAndVisible
 
     true
   end
